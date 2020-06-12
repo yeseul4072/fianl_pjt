@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from . import views
+from .models import Movie
 
 # Create your views here.
 def index(request):
@@ -21,4 +22,8 @@ def home(request):
 
 
 def community(request):
-    return render(request, 'articles/community.html')
+    movies = Movie.objects.all()
+    context = {
+        'movies': movies,
+    }
+    return render(request, 'articles/community.html', context)
