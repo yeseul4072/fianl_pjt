@@ -1,5 +1,10 @@
+from django.core.validators import validate_comma_separated_integer_list
 from django.conf import settings
 from django.db import models
+
+
+class Genre(models.Model):
+    genre = models.IntegerField()
 
 
 # Create your models here.
@@ -15,6 +20,7 @@ class Movie(models.Model):
     vote_average = models.FloatField()
     overview = models.TextField()
     release_date = models.DateField()
+    color = models.CharField(validators=[validate_comma_separated_integer_list], max_length=30, blank=True, null=True)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_movies')
     
 
