@@ -11,3 +11,14 @@ def index(request):
         
     }
     return render(request, 'articles/index.html', context)
+
+
+def home(request):
+    context = {
+
+    }
+    return render(request, 'articles/home.html', context)
+
+
+def community(request):
+    return render(request, 'articles/community.html')

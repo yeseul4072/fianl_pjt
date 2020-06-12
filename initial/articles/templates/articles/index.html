@@ -2,4 +2,8 @@
 
 {% block content %}
 <h1>취향의 나눔</h1>
+<form action="{% url 'articles:home' %}">
+    <button>나누러 가기</button>
+</form>
+
 {% endblock %}
