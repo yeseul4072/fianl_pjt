@@ -4,6 +4,17 @@ from django.db import models
 
 # Create your models here.
 class Movie(models.Model):
+    popularity = models.FloatField()
+    vote_count = models.IntegerField()
+    poster_path = models.CharField(max_length=200)
+    adult = models.BooleanField()
+    backdrop_path = models.CharField(max_length=200)
+    original_language = models.CharField(max_length=200)
+    original_title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200)
+    vote_average = models.FloatField()
+    overview = models.TextField()
+    release_date = models.DateField()
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_movies')
     
 
