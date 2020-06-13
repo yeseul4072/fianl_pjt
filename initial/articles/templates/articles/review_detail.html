@@ -18,14 +18,18 @@
 {% for comment in comments %}
     <p>{{ comment.content }}</p>
     {% if comment.user == request.user %}
-        <a href="">삭제</a>
-        <a href="">수정</a>
+        <a href="{% url 'articles:comment_delete' movie.pk review.pk comment.pk %}">삭제</a>
+        <a href="{% url 'articles:comment_update' movie.pk review.pk comment.pk %}">수정</a>
     {% endif %}
 {% endfor %}
 
 <!-- 댓글 작성 폼 -->
 {% if request.user.is_authenticated %}
-<form action="" method="POST">
+    {% if request.resolver_match.comment_create %}
+    <form action="{% url 'articles:comment_create' movie.pk review.pk %}" method="POST">
+    {% else %}
+        <form action="" method="POST">
+    {% endif %}
     {% csrf_token %}
     {{ form.as_p }}
     <button>Review submit</button>

@@ -72,8 +72,7 @@ def review_detail(request, movie_pk, review_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
     review = get_object_or_404(Review, pk=review_pk)
     comments = review.comment_set.all()
-    if request.method == 'GET':
-        pass
+    form = CommentForm()
     context = {
         'movie': movie,
         'review': review,
@@ -86,20 +85,15 @@ def review_detail(request, movie_pk, review_pk):
 
 @login_required
 def comment_create(request, movie_pk, review_pk):
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.review = review
-            comment.user = request.user
-            comment.save()
-            return redirect('articles:review_detail', movie_pk, review_pk)
-    else:
-        form = CommentForm()
-    context = { 
-        'form': form,
-    }
-    return render(request, 'articles/forms.html', context)
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    review = get_object_or_404(Review, pk=review_pk)
+    form = CommentForm(request.POST)
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.user = request.user
+        comment.review = review
+        comment.save()
+        return redirect('articles:review_detail', movie.pk, review.pk)
 
 
 @login_required
@@ -125,5 +119,33 @@ def review_update(request, movie_pk, review_pk):
         return redirect('articles:review_detail', movie_pk, review_pk)
     context = {
         'form': form,
+    }
+    return render(request, 'articles/review_detail.html', context)
+
+@login_required
+def comment_delete(request, movie_pk, review_pk, comment_pk):
+    comment = get_object_or_404(Comment, pk=comment_pk)
+    if comment.user == request.user:
+        comment.delete()
+    return redirect('articles:review_detail', movie_pk, review_pk)
+
+@login_required
+def comment_update(request, movie_pk, review_pk, comment_pk):
+    comment = get_object_or_404(Comment, pk=comment_pk)
+    review = get_object_or_404(Review, pk=review_pk)
+    if comment.user == request.user:
+        if request.method == 'POST':
+            form = CommentForm(request.POST, instance=comment)
+            if form.is_valid():
+                form.save()
+                return redirect('articles:review_detail', movie_pk, review_pk)
+        else:
+            form = CommentForm(instance=comment)
+    else:
+        return redirect('articles:review_detail', movie_pk, review_pk)
+    context = {
+        'form': form,
+        'comment': comment,
+        'review': review,
     }
     return render(request, 'articles/review_detail.html', context)
