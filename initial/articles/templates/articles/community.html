@@ -1,7 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% for review in reviews %}
-    {{ review.title }}
-{% endfor %}
+<div class="container">
+    <a href="{% url 'articles:review_create' movie.pk %}">작성하기</a>
+    <hr>
+
+    {% for review in reviews %}
+        <div class="d-flex justify-content-between">
+            <p class="font-weight-bold"><a href="{% url 'articles:review_detail' movie.pk review.pk %}">{{ review.title }}</a></p>
+            <p class="font-weight-lighter">{{ review.user }}</p>
+            <p class="font-weight-lighter">{{ review.score }}</p>
+        </div>
+        <hr>
+    {% endfor %}
+
+</div>
 {% endblock %}
