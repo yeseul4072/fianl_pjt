@@ -3,10 +3,12 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from .forms import CustomUserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.views.decorators.http import require_POST
 from .forms import ProfileForm
-from .models import Profile
+from .forms import CustomUserCreationForm
+
 # from .forms import CustomUserCreationForm
 
 # Create your views here.
@@ -36,13 +38,17 @@ def logout(request):
     return redirect('articles:index')
 
 def signup(request):
+    if request.user.is_authenticated:
+            return redirect('articles:index')
+
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST) # forms의 폼으로 바꿔줘야함
         if form.is_valid():
-            form.save()
+            user = form.save()
+            auth_login(request, user)
             return redirect('articles:index')
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm() # forms의 폼으로 바꿔줘야함
     context = {
         'form': form,
     }
@@ -50,26 +56,27 @@ def signup(request):
 
 @login_required
 def profile(request, username):
-    person = get_object_or_404(get_user_model(), username=username)
-    profile_detail= Profile
+    User = get_user_model()
+    person = get_object_or_404(User, username=username)
     context = {
         'person': person,
-        'profile_detail' : profile_detail,
     }
     return render(request, 'accounts/profile.html', context)
 
-def profile_edit(request,username):
-
+def profile_edit(request, username):
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
-            form = form.save(commit=False)
-            form.user = request.user
-            form.save()
-            return redirect('accounts:profile',username)
+            # 현재 유저의 데이터 가져오고, 받은 값으로 갱신하기
+            old_user = request.user
+            old_user.username = form.cleaned_data['username']
+            old_user.image = form.cleaned_data['image']
+            old_user.myinfo = form.cleaned_data['myinfo']
+            old_user.save()
+            return redirect('accounts:profile', old_user.username)
     else:
         form = ProfileForm()
-        context = {
-        'form':form
+    context = {
+    'form':form,
     }
     return render(request, 'accounts/profile_edit.html', context)

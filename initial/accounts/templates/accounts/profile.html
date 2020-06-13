@@ -3,8 +3,8 @@
 {% block content %}
 <h1>{{ person.username }}의 프로필</h1>
 
-{% if profile_detail.image %}
-<p><img src = "{{ profile_detail.image.url }}" alt="img"></p>
+{% if person.image %}
+<img src = "{{ person.image.url }}" alt="img">
 {% else %}
 <h1>프로필 이미지가 없습니다</h1>
 {% endif %}

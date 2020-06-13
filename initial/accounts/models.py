@@ -4,8 +4,10 @@ from django.contrib.auth.models import AbstractUser
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 
-# Create your models here.
-class Profile(models.Model):
-    image = ProcessedImageField(upload_to='',processors=[ResizeToFill(100,100)],blank=True, null=True)
+class User(AbstractUser):
+    followers = models.ManyToManyField(
+            settings.AUTH_USER_MODEL,
+            related_name='followings'
+    )
     myinfo = models.TextField(blank=True, null=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    image = ProcessedImageField(upload_to='',processors=[ResizeToFill(100,100)],blank=True, null=True)
