@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>리뷰 디테일 페이지</h1>
+<h3>제목: {{ review.title }}</h3>
+<p>작성자: {{ review.user }}</p>
+<p>{{ review.content }}</p>
+
+<hr>
+<h1>댓글</h1>
+<!-- 기존 댓글 -->
+{% for comment in comments %}
+    <p>{{ comment.content }}</p>
+    {% if comment.user == request.user %}
+        <a href="">삭제</a>
+        <a href="">수정</a>
+    {% endif %}
+{% endfor %}
+
+<!-- 댓글 작성 폼 -->
+{% if request.user.is_authenticated %}
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button>Review submit</button>
+</form>
+{% endif %}
+
+{% endblock %}

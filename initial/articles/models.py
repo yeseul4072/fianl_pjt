@@ -1,4 +1,5 @@
 from django.core.validators import validate_comma_separated_integer_list
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.conf import settings
 from django.db import models
 
@@ -25,12 +26,13 @@ class Movie(models.Model):
     
 
 class Review(models.Model):
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     title = models.TextField()
     content = models.TextField()
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    score = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
 
 
 class Comment(models.Model):
