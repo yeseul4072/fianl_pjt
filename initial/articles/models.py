@@ -4,8 +4,8 @@ from django.conf import settings
 from django.db import models
 
 
-class Genre(models.Model):
-    genre = models.IntegerField()
+class Genre(models.Model): 
+    name = models.CharField(max_length=20) 
 
 
 # Create your models here.
@@ -23,6 +23,7 @@ class Movie(models.Model):
     release_date = models.DateField()
     color = models.CharField(validators=[validate_comma_separated_integer_list], max_length=30, blank=True, null=True)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_movies')
+    genre_ids = models.ManyToManyField(Genre, related_name='genre_movies', blank=True)
     
 
 class Review(models.Model):
