@@ -6,6 +6,12 @@
 <p>작성자: {{ review.user }}</p>
 <p>{{ review.content }}</p>
 
+{% if request.user == review.user %}
+    <a href="{% url 'articles:review_update' movie.pk review.pk %}">수정</a>
+    <a href="{% url 'articles:review_delete' movie.pk review.pk %}">삭제</a>
+{% endif %}
+
+<!-- 여기부터 댓글 -->
 <hr>
 <h1>댓글</h1>
 <!-- 기존 댓글 -->

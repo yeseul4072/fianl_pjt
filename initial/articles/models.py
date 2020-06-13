@@ -12,9 +12,9 @@ class Genre(models.Model):
 class Movie(models.Model):
     popularity = models.FloatField()
     vote_count = models.IntegerField()
-    poster_path = models.CharField(max_length=200)
+    poster_path = models.CharField(max_length=200, null=True)
     adult = models.BooleanField()
-    backdrop_path = models.CharField(max_length=200)
+    backdrop_path = models.CharField(max_length=200, null=True)
     original_language = models.CharField(max_length=200)
     original_title = models.CharField(max_length=200)
     title = models.CharField(max_length=200)
