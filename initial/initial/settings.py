@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'accounts',
     'bootstrap4',
     'imagekit',
+    'bootstrap_pagination',
 ]
 
 MIDDLEWARE = [
@@ -122,6 +123,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"), # Root의 static 파일
+    '/articles/static/',	# garden App의 static 파일
+)
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'profile')
 MEDIA_URL = '/profile/'

@@ -1,19 +1,33 @@
 {% extends 'base.html' %}
+{% load bootstrap_pagination %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'articles/style.css' %}">
+{% endblock %}
 
 {% block content %}
-<h1>인기 영화</h1>
-{% for movie in movies %}
-    <div class="card d-inline-flex" style="width: 18rem;">
-        <img src="https://image.tmdb.org/t/p/w300/{{movie.poster_path}}" class="card-img-top" alt="movie_img">
-        <div class="card-body">
-        <h5 class="card-title">{{ movie.title }}</h5>
-        <h5 class="card-subtitle">{{ movie.original_title }}</h5>
-        {{ movie.release_date }}
-        <br>
-        <a href="{% url 'articles:movie_detail' movie.pk %}" class="btn btn-primary">See detail</a>
+<div class="container">
+    <h1>인기 영화</h1> 
+    {% for movie in page_obj %}   
+        <div class="card d-inline-flex m-10 justify-content-center" style="width: 15rem;">
+            <form action="{% url 'articles:movie_detail' movie.pk %}">
+                <button class="btn-poster">
+                    <div class="poster-wrap position-relative">
+                        <img src="https://image.tmdb.org/t/p/w300/{{movie.poster_path}}" alt="movie_img" style="width: 15rem; height: 20rem;">
+                        <div class="description">
+                            <h5>{{ movie.title }}</h5>
+                            <br>
+                            {{ movie.release_date }}
+                        </div>
+                    </div>
+                </button>
+            
         </div>
-    </div>
-    {{ movie.genre_ids }}
-{% endfor %}
+    {% endfor %}
+    
+    {% bootstrap_paginate page_obj range=10 show_prev_next="false" show_first_last="true" %}
+</div>
+
 
 {% endblock %}
