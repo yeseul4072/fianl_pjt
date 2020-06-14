@@ -20,8 +20,19 @@ def index(request):
 
 
 def home(request):
+    # 추천 영화 알고리즘 
+    # 비회원 & 리뷰를 남기지 않은 경우 => 인기순
+    movies = Movie.objects.order_by('-popularity')
+    if request.user.is_authenticated:
+        # 리뷰를 남긴 경우 => 장르를 기준으로 평점의 평균을 구해서 장르 내림차순 
+        if request.user.review_set.count():
+            # 
+            # 
+            # movies = request.user.review_set.order
+            # qs = Score.objects.values('subject_name') \ .annotate(Avg('score')) f
+            pass
     context = {
-
+        'movies': movies,
     }
     return render(request, 'articles/home.html', context)
 
