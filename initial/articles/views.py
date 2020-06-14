@@ -38,6 +38,18 @@ def movie_list(request):
     return render(request, 'articles/movie_list.html', context)
 
 
+def last_movie_list(request):
+    movies = Movie.objects.order_by('-release_date')
+    paginator = Paginator(movies, 12)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {
+        'movies': movies,
+        'page_obj': page_obj,
+    }
+    return render(request, 'articles/movie_list.html', context)
+
+
 def movie_detail(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
     context = {
