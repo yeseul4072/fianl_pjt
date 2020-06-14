@@ -1,9 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
+
+from django.contrib.auth import get_user_model 
 from . import views
-from .models import Movie, Review, Comment
+from .models import Movie, Review, Comment, Genre
 from .forms import ReviewForm, CommentForm
 from django.contrib.auth.decorators import login_required
-
+from django.db.models import Avg
+import operator
+from collections import Counter
 # pagination
 from django.core.paginator import Paginator
 
@@ -25,16 +29,50 @@ def home(request):
     movies = Movie.objects.order_by('-popularity')
     if request.user.is_authenticated:
         # 리뷰를 남긴 경우 => 장르를 기준으로 평점의 평균을 구해서 장르 내림차순 
-        if request.user.review_set.count():
-            # 
-            # 
-            # movies = request.user.review_set.order
-            # qs = Score.objects.values('subject_name') \ .annotate(Avg('score')) f
-            pass
+        User = get_user_model()
+        user = User.objects.get(pk=request.user.pk)
+        if len(user.review_set.all()): # 작성한 리뷰가 있는 경우
+            scores = {
+                '28': [0, 0], '12': [0, 0], '16': [0, 0], '35': [0, 0], '80': [0, 0], '99': [0, 0], '18': [0, 0], '10751': [0, 0], '14': [0, 0], '36': [0, 0], '27': [0, 0], '10402': [0, 0], '9648': [0, 0], '10749': [0, 0], '878': [0, 0], '10770': [0, 0], '53': [0, 0], '10752': [0, 0]
+                } # genre : [cnt, sum]
+            for review in user.review_set.all():
+                score = review.score
+                for genre in Genre.objects.filter(review=review.pk).values():
+                    genre_id = str(genre['id'])
+                    # cnt += 1, sum += 점수
+                    scores[genre_id][0] = scores[genre_id][0] + 1
+                    scores[genre_id][1] = scores[genre_id][1] + score
+            
+            # 평균 구하기
+            for k, v in scores.items():
+                if v[0]:
+                    value = v[1] // v[0]
+                    scores[k] = value
+                else:
+                    scores[k] = 0
+            # 가장 큰 평균 평점 가지는 장르 구하기 => 값 기준 내림차순 정렬
+            scores = sorted(scores.items(), key=operator.itemgetter(1), reverse=True)
+            g_id = int(scores[0][0]) # 선호하는 장르를 찾았다
+            
+            # 유저가 본 영화 중 가장 많은 언어 선택 
+            temp = []
+            for review in user.review_set.all():
+                l = Movie.objects.filter(review=review.id).values()[0]['original_language']
+                temp.append(l)
+            # 배열에서 data 개수 세기
+            counter = Counter(temp)
+            c = sorted(counter.items(), key=operator.itemgetter(1), reverse=True)
+            lan = c[0][0] # 선호하는 언어를 찾았다
+
+            # 선호하는 장르 + 언어 영화를 인기도를 기준으로 내림차순 정렬
+            movies = Movie.objects.filter(genre_ids=g_id, original_language=lan).order_by('-popularity')
+
+    
     context = {
-        'movies': movies,
+        'movies' : movies,
     }
     return render(request, 'articles/home.html', context)
+
 
 
 def movie_list(request):
@@ -82,6 +120,8 @@ def community(request, movie_pk):
 @login_required
 def review_create(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
+    # 해당하는 영화의 장르
+    genres = Genre.objects.filter(genre_movies=movie_pk)
     if request.method == 'POST':
         form = ReviewForm(request.POST)
         if form.is_valid():
@@ -89,6 +129,7 @@ def review_create(request, movie_pk):
             review.movie = movie
             review.user = request.user
             review.save()
+            review.genre_ids.set(genres)
             return redirect('articles:community', movie_pk)
     else:
         form = ReviewForm()
