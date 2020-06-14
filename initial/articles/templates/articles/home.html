@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>홈</h1>
+{% for movie in movies %}
+    {{ movie.title }}
+    <br>
+{% endfor %}
 
 
 {% endblock %}
