@@ -4,9 +4,11 @@ certifi==2020.4.5.2
 chardet==3.0.4
 Django==3.0.7
 django-appconf==1.0.4
+django-bootstrap-pagination==1.7.1
 django-bootstrap4==2.0.1
 django-imagekit==4.0.2
 idna==2.9
+myapp==0.1.dev0
 pilkit==2.0
 Pillow==7.1.2
 pytz==2020.1

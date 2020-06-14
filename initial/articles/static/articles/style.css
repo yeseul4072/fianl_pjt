@@ -1,0 +1,48 @@
+.btn-poster {
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    cursor: pointer;
+    background-color: white;
+}
+
+.btn-poster img {
+    display: block;
+}
+
+.btn-poster:hover .poster-wrap {
+    background-color: black;
+}
+
+.btn-poster:hover img {
+    opacity: 0.4;
+}
+
+.card-body {
+    display: none;
+}
+
+.btn-poster:hover .card-body {
+    display: inline;
+}
+
+.btn-poster:hover .description {
+    visibility: visible;
+    opacity: 1;
+}
+
+.description {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.card {
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
