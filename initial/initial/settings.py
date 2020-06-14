@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'imagekit',
     'bootstrap_pagination',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
