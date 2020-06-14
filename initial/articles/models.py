@@ -33,6 +33,7 @@ class Review(models.Model):
     updated_at = models.DateField(auto_now=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    genre_ids = models.ManyToManyField(Genre, related_name='review', blank=True) 
     score = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
 
 
