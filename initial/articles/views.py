@@ -255,8 +255,10 @@ def youtube(request, movie_pk):
         'key': 'AIzaSyCPz_ddnnn-ZBZ2Kw443XEnT0xYRBut4S4',
         'part': 'snippet',
         'type': 'video',
-        'maxResults': '10',
+        'maxResults': '1',
         'q': inputvalue,
+
+  
     }
     response = requests.get(url, params)
     response_dict = response.json()
