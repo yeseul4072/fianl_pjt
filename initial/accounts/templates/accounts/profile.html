@@ -1,41 +1,61 @@
 {% extends 'base.html' %}
+{% block head %}
+<style>
+    .container{
+        font-family: 'Nanum Pen Script', cursive;
+        background-color:#FDF7FB;
 
+    }
+
+
+</style>
+{% endblock %}
 {% block content %}
-<h1>{{ person.username }}의 프로필</h1>
 
+<div class='container'>
+<div class="d-flex justify-content-center">
+<div class="profile_name" style="margin-top: 20px;">
+    {% if person.nickname %}
+    <p>{{ person.nickname }}의 프로필</p>
+    {%else %}
+    <p>{{ person.username }}의 프로필</p>
+    {% endif %}
+</div>
+</div>
+<div class="d-flex justify-content-center">
 <div class="profile_image">
-{% if person.image %}
-<img src = "{{ person.image.url }}" alt="img">
-{% else %}
-<h1>프로필 이미지가 없습니다</h1>
-{% endif %}
+    {% if person.image %}
+    <img src = "{{ person.image.url }}" alt="img">
+    {% else %}
+    <h1>프로필 이미지가 없습니다</h1>
+    {% endif %}
+    </div>
+</div>    
+    <div class="profile_myinfo">
+    {% if person.myinfo %}
+    <p>{{ person.myinfo }}</p>
+    {% else %}
+    <h1>프로필 설명이 없습니다</h1>
+    {% endif %}
+    </div>
+    <div class='myreview'>
+    <div class="list-group">
+    {% if reviews %}
+    {% for review in reviews %}
+        <a href="{% url 'articles:review_detail' review.movie.pk review.pk %}" class="list-group-item list-group-item-action">{{ review.title }}</a>
+    {% endfor %}
+    </div>
+    {% else %}
+    <p>등록된 리뷰가 없습니다.</p>
+    {% endif %}
+    </div>
+    
+    {% if request.user == person %}
+    <a href="{% url 'accounts:profile_edit' user.username %}">프로필수정하기</a>
+    
+    {% endif %}
+
 </div>
 
-<div class="profile_myinfo">
-{% if person.myinfo %}
-<p>{{ person.myinfo }}</p>
-{% else %}
-<h1>프로필 설명이 없습니다</h1>
-{% endif %}
-</div>
-
-<div class="mymoviereview">
-{% if reviews %}
-<ul>
-{% for review in reviews %}
- <li>
-    <a href="{% url 'articles:review_detail' review.movie.pk review.pk %}">{{ review.title }}</a>
- </li>   
-{% endfor %}
-</ul>
-{% else %}
-<p>등록된 리뷰가 없습니다.</p>
-{% endif %}
-</div>
-
-{% if request.user == person %}
-<a href="{% url 'accounts:profile_edit' user.username %}">프로필수정하기</a>
-
-{% endif %}
 
 {% endblock %}
