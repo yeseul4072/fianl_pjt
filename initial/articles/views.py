@@ -10,7 +10,7 @@ import operator
 from collections import Counter
 # pagination
 from django.core.paginator import Paginator
-
+import requests
 # Create your views here.
 def index(request):
     # articles = Article.objects.all()
@@ -116,6 +116,7 @@ def last_movie_list(request):
 
 def movie_detail(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
+
     context = {
         'movie': movie,
     }
@@ -245,3 +246,23 @@ def comment_update(request, movie_pk, review_pk, comment_pk):
         'review': review,
     }
     return render(request, 'articles/review_detail.html', context)
+
+def youtube(request, movie_pk):
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    inputvalue = movie.title+'trailer'
+    url = 'https://www.googleapis.com/youtube/v3/search'
+    params = {
+        'key': 'AIzaSyCPz_ddnnn-ZBZ2Kw443XEnT0xYRBut4S4',
+        'part': 'snippet',
+        'type': 'video',
+        'maxResults': '10',
+        'q': inputvalue,
+    }
+    response = requests.get(url, params)
+    response_dict = response.json()
+
+    context = {
+        'youtube_items': response_dict['items']
+        
+    }
+    return render(request, 'articles/youtube.html', context)

@@ -134,3 +134,19 @@ MEDIA_URL = '/profile/'
 
 AUTH_USER_MODEL = 'accounts.User'
 SHELL_PLUS_PRINT_SQL = True
+
+# api key 암호화
+# with open('secret.json', 'r') as f:
+#     secret = json.loads(f.read())
+# # with 함수는 자동으로 파일을 닫아준다
+
+# def get_secret(setting, secret=secret):
+#     try:
+#         return secret[setting]
+#     except:
+#         msg = "Set key '{0}' in secret.json".format(setting)
+#         raise ImproperlyConfigured(error_msg)
+
+API_URL = "https://www.googleapis.com/youtube/v3/search"
+# YOUTUVE_API_KEY = get_secret('YOUTUVE_API_KEY')
+YOUTUBE_API_KEY = "AIzaSyCPz_ddnnn-ZBZ2Kw443XEnT0xYRBut4S4"
