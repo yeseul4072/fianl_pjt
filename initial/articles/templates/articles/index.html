@@ -1,9 +1,61 @@
 {% extends 'base.html' %}
+{% block head %}
+<head>
+    <link rel="stylesheet" type="text/css" href="reset.css">                                              
+</head>
+<style>
+    @font-face {
+    font-family: "윤고딕320";
+    src: url('/static/윤고딕320.ttf');
+    }
 
+    .home {
+        
+        position: relative;
+        height: 100vh;
+        background-image: url('/static/talking.jpg');
+        background-repeat:no-repeat;
+        background-size: cover;
+
+
+    }
+    .img-cover{
+   position: absolute;
+   height: 100%;
+   width: 100%;
+   background-color: rgba(0, 0, 0, 0.4);                                                                 
+   z-index:1;
+    }
+    .home .content{
+    font-family: "윤고딕320";
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);                                                                   
+    font-size:5rem;
+    color: white;
+    z-index: 2;
+    text-align: center;
+}
+
+
+    </style>
+{% endblock %}
 {% block content %}
+{% if request.user.is_authenticated %}
 <h1>취향의 나눔</h1>
 <form action="{% url 'articles:home' %}">
     <button>나누러 가기</button>
 </form>
+{% else %}
+<div class="home">
+    <div class="content">
+         <h1>'취향의 나눔'에 오신걸 환영합니다.</h1>   
+        <h1>우리는 영화 취향을 나누고 취향이 맞는 회원들을 매칭하는 서비스를 제공합니다</h1>
+
+    </div>
+    <div class="img-cover"></div>
+</div>
+{% endif %}
 
 {% endblock %}
