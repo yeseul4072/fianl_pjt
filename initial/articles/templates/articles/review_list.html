@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load bootstrap_pagination %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'articles/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container" style="margin-top: 50px; margin-bottom: 50px;">
+    <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">num</th>
+            <th scope="col">제목</th>
+            <th scope="col">작성자</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for review in page_obj %}   
+          <tr>
+            <th scope="row">{{ review.id }}</th>
+            <td><a href="{% url 'articles:review_detail' review.movie.pk review.pk %}">{{ review.title }}</a></td>
+            <td>{{ review.user.username }}</td>
+          </tr>
+        {% endfor %} 
+        </tbody>
+      </table>
+        <div class="d-flex justify-content-center" style="margin-top: 20px;">
+            {% bootstrap_paginate page_obj range=10 show_prev_next="false" show_first_last="true" %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
