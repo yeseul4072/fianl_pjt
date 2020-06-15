@@ -116,9 +116,21 @@ def last_movie_list(request):
 
 def movie_detail(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
+    inputvalue = movie.title+'trailer'
+    url = 'https://www.googleapis.com/youtube/v3/search'
+    params = {
+        'key': 'AIzaSyCPz_ddnnn-ZBZ2Kw443XEnT0xYRBut4S4',
+        'part': 'snippet',
+        'type': 'video',
+        'maxResults': '1',
+        'q': inputvalue,
+    }
+    response = requests.get(url, params)
+    response_dict = response.json()
 
     context = {
         'movie': movie,
+        'youtube_items': response_dict['items']
     }
     return render(request, 'articles/movie_detail.html', context)
 
@@ -249,16 +261,16 @@ def comment_update(request, movie_pk, review_pk, comment_pk):
 
 def youtube(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
-    inputvalue = movie.title+'trailer'
+    inputvalue = movie.orinal_title+'trailer'
     url = 'https://www.googleapis.com/youtube/v3/search'
     params = {
         'key': 'AIzaSyCPz_ddnnn-ZBZ2Kw443XEnT0xYRBut4S4',
         'part': 'snippet',
         'type': 'video',
         'maxResults': '1',
+        'order':'rating',
         'q': inputvalue,
-
-  
+        
     }
     response = requests.get(url, params)
     response_dict = response.json()

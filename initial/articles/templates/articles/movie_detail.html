@@ -20,6 +20,12 @@
             <p>누적 관객 수: {{ movie.popularity }}</p>
             <hr>
             <p>{{ movie.overview }}</p>
+            <hr>
+            <div class="trailers">
+            {% for youtube_item in youtube_items %}
+            <iframe type="text/html" class="embed-responsive-item" src="https://www.youtube.com/embed/{{ youtube_item.id.videoId }}" frameborder="0"></iframe>    
+            {% endfor %}
+          </div>
         </div>
     </div>
 
