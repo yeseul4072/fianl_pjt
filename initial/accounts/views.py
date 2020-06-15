@@ -60,12 +60,15 @@ def profile(request, username):
     User = get_user_model()
     user_id = User.objects.filter(username=username).values('id')[0]['id']
     person = get_object_or_404(User, username=username)
-    reviews = Review.objects.filter(user=user_id).values('title')
+    # movie = get_object_or_404(Movie, pk=movie_pk)
+    # review = get_object_or_404(Review, pk=review_pk)
+    reviews = Review.objects.filter(user=user_id)
     # 사용자의 리뷰
     # 사용자의 최고 평점 영화
     context = {
         'person': person,
         'reviews' : reviews,
+
     }
     return render(request, 'accounts/profile.html', context)
 
@@ -75,7 +78,8 @@ def profile_edit(request, username):
         if form.is_valid():
             # 현재 유저의 데이터 가져오고, 받은 값으로 갱신하기
             old_user = request.user
-            old_user.username = form.cleaned_data['username']
+            if old_user.nickname :
+                old_user.nickname = form.cleaned_data['nickname']
             old_user.image = form.cleaned_data['image']
             old_user.myinfo = form.cleaned_data['myinfo']
             old_user.save()

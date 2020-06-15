@@ -11,3 +11,4 @@ class User(AbstractUser):
     )
     myinfo = models.TextField(blank=True, null=True)
     image = ProcessedImageField(upload_to='',processors=[ResizeToFill(100,100)],blank=True, null=True)
+    nickname = models.TextField(blank=True, null=True)
