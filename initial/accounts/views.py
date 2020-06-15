@@ -40,14 +40,14 @@ def logout(request):
 
 def signup(request):
     if request.user.is_authenticated:
-            return redirect('articles:index')
+            return redirect('articles:home')
 
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST) # forms의 폼으로 바꿔줘야함
         if form.is_valid():
             user = form.save()
             auth_login(request, user)
-            return redirect('articles:index')
+            return redirect('articles:home')
     else:
         form = CustomUserCreationForm() # forms의 폼으로 바꿔줘야함
     context = {

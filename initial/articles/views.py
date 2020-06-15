@@ -119,7 +119,7 @@ def movie_detail(request, movie_pk):
     inputvalue = movie.title+'trailer'
     url = 'https://www.googleapis.com/youtube/v3/search'
     params = {
-        'key': 'AIzaSyCPz_ddnnn-ZBZ2Kw443XEnT0xYRBut4S4',
+        'key': 'AIzaSyDKTO02d8YlEKrVzFVme7tq_zqfLDdjQDg',
         'part': 'snippet',
         'type': 'video',
         'maxResults': '1',
