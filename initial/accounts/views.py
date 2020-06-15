@@ -9,11 +9,11 @@ from django.views.decorators.http import require_POST
 from .forms import ProfileForm
 from .forms import CustomUserCreationForm
 from articles.models import Review
-
+from django.views.decorators.csrf import csrf_exempt
 # from .forms import CustomUserCreationForm
 
 # Create your views here.
-
+@csrf_exempt
 def login(request):
     if request.user.is_authenticated:
         return redirect('articles:index')
