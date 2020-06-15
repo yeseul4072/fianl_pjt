@@ -22,7 +22,7 @@ def index(request):
     }
     return render(request, 'articles/index.html', context)
 
-
+@login_required
 def home(request):
     # 추천 영화 알고리즘 
     # 비회원 & 리뷰를 남기지 않은 경우 => 인기순
