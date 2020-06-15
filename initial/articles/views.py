@@ -56,20 +56,36 @@ def home(request):
             
             # 유저가 본 영화 중 가장 많은 언어 선택 
             temp = []
+            fin = [] # 유저가 작성한 리뷰 
             for review in user.review_set.all():
                 l = Movie.objects.filter(review=review.id).values()[0]['original_language']
                 temp.append(l)
+                # 이미 본 영화 처리 = > 작성한 리뷰 아이디 저장
+                fin.append(review.id)
+
             # 배열에서 data 개수 세기
             counter = Counter(temp)
             c = sorted(counter.items(), key=operator.itemgetter(1), reverse=True)
             lan = c[0][0] # 선호하는 언어를 찾았다
 
             # 선호하는 장르 + 언어 영화를 인기도를 기준으로 내림차순 정렬
-            movies = Movie.objects.filter(genre_ids=g_id, original_language=lan).order_by('-popularity')
-
+            movies = Movie.objects.filter(genre_ids=g_id).exclude(review__in=fin).order_by('-popularity')[:5]
     
+        # 유저가 가장 최근에 리뷰를 작성한 영화
+        if len(user.review_set.all()):
+            last_movie = user.review_set.last().movie
+            # last_movie 에 대한 다른 유저의 리뷰 3개 들고오기
+            other_reviews = last_movie.review_set.exclude(user=user).order_by('-created_at')[:3]
+
+        else:
+            last_movie = ''
+            other_reviews = ''
+        
+
     context = {
         'movies' : movies,
+        'last_movie': last_movie,
+        'other_reviews': other_reviews,
     }
     return render(request, 'articles/home.html', context)
 

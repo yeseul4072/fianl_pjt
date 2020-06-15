@@ -1,22 +1,50 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'articles/style.css' %}">
+{% endblock %}
 
 {% block content %}
-
-<div class="container">
-    {% for movie in movies %} 
-        <div class="row">
-            <div class="col">
-                <img src="https://image.tmdb.org/t/p/w300/{{movie.poster_path}}" alt="movie_img">
-            </div>  
-            <div class="col">
-                <p>여기에 유저 리뷰 넣기</p>
+<div class="container" style="margin-top: 50px; margin-bottom: 50px;">
+    <!-- 최근 본 영화-->
+    <!-- 최근에 본 영화가 없는 경우 -->
+    <div class="d-flex flex-column align-items-center">
+        <h4>최근에 '{{ last_movie.title }}'에 대한 리뷰를 작성하였습니다</h4>
+        <p>같은 영화를 감상한 사람들과 자유롭게 이야기를 나눠보세요</p>
+    </div>
+    <div class="d-flex justify-content-between">
+        {% for review in other_reviews %}
+            <div style=" width: 31%;">
+                <div class="text-center" style="margin: 20px;">
+                    <div class="mb-3">
+                        {% if review.user.image %}
+                        <a href="{% url 'accounts:profile' review.user %}"><img class="profile_img" src = "{{ review.user.image.url }}" style="width: 100px; height: 100px;"></a>
+                        {% else %}
+                        <a href="{% url 'accounts:profile' review.user %}"><img class="profile_img" src = "{% static 'articles/defalt_avatar.png' %}" style="width: 100px; height: 100px;"></a>
+                        {% endif %}
+                        <div class="text-muted">{{ review.user }}</div>
+                    </div>
+                    <div class="txt_post font-weight-bold">"{{ review.title }}"</div>
+                    <div class="txt_post"><p>{{ review.content }}</p></div>
+                </div>
             </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
 </div>
 
-        
 
-    
-
+<div class="container"> 
+    <div class="row">{{ request.user.username }}님의 취향 저격 영화</div>
+    <div class="row"> 
+        {% for movie in movies %} 
+        <div class="box" style="height: 450px; width:300px;"> 
+            <div class="m_name" data-toggle="tooltip" data-placement="top"> 
+                <a href="{% url 'articles:movie_detail' movie.pk %}"><img style="height: 450px; width:300px;" src="https://image.tmdb.org/t/p/w300/{{movie.poster_path}}"></a>
+            </div> 
+            <span>{{ movie.title }}</span> 
+        </div> 
+        {% endfor %} 
+    </div> 
+</div>
 {% endblock %}
