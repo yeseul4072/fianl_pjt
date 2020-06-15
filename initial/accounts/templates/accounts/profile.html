@@ -19,21 +19,19 @@
 {% endif %}
 </div>
 
-<div class="mybestmovie">
+<div class="mymoviereview">
 {% if reviews %}
+<ul>
 {% for review in reviews %}
-<p>{{ review }}</p>
+ <li>
+    <a href="{% url 'articles:review_detail' review.movie.pk review.pk %}">{{ review.title }}</a>
+ </li>   
 {% endfor %}
+</ul>
 {% else %}
 <p>등록된 리뷰가 없습니다.</p>
 {% endif %}
 </div>
-
-<div class="myreview">
-
-</div>
-
-
 
 {% if request.user == person %}
 <a href="{% url 'accounts:profile_edit' user.username %}">프로필수정하기</a>
