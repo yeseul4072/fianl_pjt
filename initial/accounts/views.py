@@ -8,6 +8,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.views.decorators.http import require_POST
 from .forms import ProfileForm
 from .forms import CustomUserCreationForm
+from articles.models import Review
 
 # from .forms import CustomUserCreationForm
 
@@ -57,9 +58,14 @@ def signup(request):
 @login_required
 def profile(request, username):
     User = get_user_model()
+    user_id = User.objects.filter(username=username).values('id')[0]['id']
     person = get_object_or_404(User, username=username)
+    reviews = Review.objects.filter(user=user_id).values('title')
+    # 사용자의 리뷰
+    # 사용자의 최고 평점 영화
     context = {
         'person': person,
+        'reviews' : reviews,
     }
     return render(request, 'accounts/profile.html', context)
 
