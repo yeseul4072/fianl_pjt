@@ -3,11 +3,35 @@
 {% block content %}
 <h1>{{ person.username }}의 프로필</h1>
 
+<div class="profile_image">
 {% if person.image %}
 <img src = "{{ person.image.url }}" alt="img">
 {% else %}
 <h1>프로필 이미지가 없습니다</h1>
 {% endif %}
+</div>
+
+<div class="profile_myinfo">
+{% if person.myinfo %}
+<p>{{ person.myinfo }}</p>
+{% else %}
+<h1>프로필 설명이 없습니다</h1>
+{% endif %}
+</div>
+
+<div class="mybestmovie">
+{% if reviews %}
+{% for review in reviews %}
+<p>{{ review }}</p>
+{% endfor %}
+{% else %}
+<p>등록된 리뷰가 없습니다.</p>
+{% endif %}
+</div>
+
+<div class="myreview">
+
+</div>
 
 
 

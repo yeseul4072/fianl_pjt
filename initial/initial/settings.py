@@ -133,3 +133,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'profile')
 MEDIA_URL = '/profile/'
 
 AUTH_USER_MODEL = 'accounts.User'
+SHELL_PLUS_PRINT_SQL = True
