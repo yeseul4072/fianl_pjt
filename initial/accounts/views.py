@@ -24,7 +24,7 @@ def login(request):
         if form.is_valid():
             # 검증 완료시 로그인!
             auth_login(request, form.get_user())
-            return redirect(request.GET.get('next') or 'articles:index')
+            return redirect(request.GET.get('next') or 'articles:home')
     else:
         form = AuthenticationForm()
     context = {
