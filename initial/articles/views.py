@@ -143,9 +143,13 @@ def community(request, movie_pk):
     # 해당하는 영화에 대한 reviews 들고오기 
     movie = get_object_or_404(Movie, pk=movie_pk)
     reviews = movie.review_set.all()
+    paginator = Paginator(reviews, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
         'reviews': reviews,
         'movie': movie,
+        'page_obj': page_obj,
     }
     return render(request, 'articles/community.html', context)
 
