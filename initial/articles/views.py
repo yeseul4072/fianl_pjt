@@ -13,6 +13,8 @@ from django.core.paginator import Paginator
 import requests
 # Create your views here.
 def index(request):
+    if request.user.is_authenticated:
+        return redirect('articles:home')
     # articles = Article.objects.all()
     
     context = {
