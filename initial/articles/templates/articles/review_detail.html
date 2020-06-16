@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block head %}
 
 {% endblock %}
@@ -7,6 +7,11 @@
 {% block content %}
 <div class="review_detail">
     <div class="content">
+        {% if review.user.image %}
+            <a href="{% url 'accounts:profile' review.user %}"><img class="profile_img" src = "{{ review.user.image.url }}" style="width: 100px; height: 100px;"></a>
+        {% else %}
+            <a href="{% url 'accounts:profile' review.user %}"><img class="profile_img" src = "/static/noprofile.jpg" style="width: 100px; height: 100px;"></a>
+        {% endif %}
         <h3>제목: {{ review.title }}</h3>
         <p>작성자: {{ review.user }}</p>
         <p>{{ review.content }}</p>
