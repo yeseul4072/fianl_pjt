@@ -89,9 +89,9 @@ body {
                 <div class = "following">
                 {% if request.user != person %}
                     {% if request.user in person.followers.all %}
-                    <a href="{% url 'accounts:follow' person.username %}" class="btn btn-dark btn-sm btn-block">팔로우 취소</a>
+                    <a href="{% url 'accounts:follow' person.username %}" class="btn btn-dark btn-sm btn-block" style="width: 30%;">팔로우 취소</a>
                     {% else %}
-                    <a href="{% url 'accounts:follow' person.username %}" class="btn btn-dark btn-sm btn-block" style="width: 30%; ">팔로우</a>
+                    <a href="{% url 'accounts:follow' person.username %}" class="btn btn-dark btn-sm btn-block" style="width: 30%;">팔로우</a>
                     {% endif %}
                 {% endif %}
                 </div>

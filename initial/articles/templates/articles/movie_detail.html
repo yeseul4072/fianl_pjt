@@ -11,7 +11,29 @@
         </div>
     </nav>
     <div class="d-flex">
-        <img src="https://image.tmdb.org/t/p/w300/{{movie.poster_path}}">
+      <!-- Button trigger modal -->
+      <a href="" data-toggle="modal" data-target="#exampleModal"><img src="https://image.tmdb.org/t/p/w300/{{movie.poster_path}}"></a>
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">{{ movie.title }}의 예고편</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                {% for youtube_item in youtube_items %}
+                <iframe type="text/html" class="embed-responsive-item" src="https://www.youtube.com/embed/{{ youtube_item.id.videoId }}" ></iframe>    
+                {% endfor %}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
         <div>
             <h3>{{ movie.title }}</h3>
             <h5>{{ movie.original_title }}</h5>
@@ -21,11 +43,6 @@
             <hr>
             <p>{{ movie.overview }}</p>
             <hr>
-            <div class="trailers">
-            {% for youtube_item in youtube_items %}
-            <iframe type="text/html" class="embed-responsive-item" src="https://www.youtube.com/embed/{{ youtube_item.id.videoId }}" frameborder="0"></iframe>    
-            {% endfor %}
-          </div>
         </div>
     </div>
 
