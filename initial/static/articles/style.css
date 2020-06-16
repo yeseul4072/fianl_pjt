@@ -87,4 +87,64 @@
     word-wrap:break-word; 
     line-height: 1.2em;
     height: 3.6em; /* line-height 가 1.2em 이고 3라인을 자르기 때문에 height는 1.2em * 3 = 3.6em */
+    font-family: "font_L"
   }
+.review_box {
+    box-shadow: 7px 7px 7px gray;
+}
+
+.bg_img {
+    height: 100vh;
+    background-image: url('/static/home_bg.png');
+    background-repeat:no-repeat;
+    background-size: cover;
+
+}
+
+/* index */
+.index {
+    height: 100vh;
+    background-image: url('/static/index_bg.png');
+    background-repeat:no-repeat;
+    background-size: cover;
+
+}
+.index2 {
+    height: 100vh;
+    background-image: url('/static/index_bg2.png');
+    background-repeat:no-repeat;
+    background-size: cover;
+
+}
+
+/* font */
+@font-face {
+    src : url('/static/fonts/NanumSquare_acR.ttf');
+    font-family: "font_R";
+}
+
+.text_R {
+    font-family: "font_R";
+    font-size: large;
+}
+
+@font-face {
+    src : url('/static/fonts/NanumSquare_acB.ttf');
+    font-family: "font_B";
+}
+
+.text_B {
+    font-family: "font_B";
+    font-size: x-large;
+}
+
+@font-face {
+    src : url('/static/fonts/NanumSquare_acR.ttf');
+    font-family: "font_L";
+}
+
+.text_L {
+    font-family: "font_L";
+    font-size: medium;
+}
+
