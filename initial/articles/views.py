@@ -118,6 +118,7 @@ def last_movie_list(request):
 
 def movie_detail(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
+    reviews = movie.review_set.all()
     inputvalue = movie.title+'trailer'
     url = 'https://www.googleapis.com/youtube/v3/search'
     params = {
@@ -132,10 +133,11 @@ def movie_detail(request, movie_pk):
 
     context = {
         'movie': movie,
-        'youtube_items': response_dict['items']
+        'reviews': reviews,
+        'response_dict': response_dict
+        # 'youtube_items': response_dict['items']
     }
     return render(request, 'articles/movie_detail.html', context)
-
 
 def community(request, movie_pk):
     # 해당하는 영화에 대한 reviews 들고오기 
@@ -147,6 +149,7 @@ def community(request, movie_pk):
     }
     return render(request, 'articles/community.html', context)
 
+    
 @login_required
 def review_create(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)

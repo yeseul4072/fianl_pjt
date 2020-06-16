@@ -148,4 +148,13 @@
     font-family: "font_L";
     font-size: medium;
 }
+@font-face {
+    src : url('/static/fonts/NanumSquare_acL.ttf');
+    font-family: "font_XL";
+}
+
+.text_XL {
+    font-family: "font_XL";
+    font-size: medium;
+}
 

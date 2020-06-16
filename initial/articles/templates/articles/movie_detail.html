@@ -1,53 +1,40 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'articles/style.css' %}">
+{% endblock %}
 
 {% block content %}
-<div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light bg-white">
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="{% url 'articles:movie_detail' movie.pk %}">영화 개요<span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link" href="{% url 'articles:community' movie.pk %}">나눔소</a>
-          </div>
-        </div>
-    </nav>
-    <div class="d-flex">
-      <!-- Button trigger modal -->
-      <a href="" data-toggle="modal" data-target="#exampleModal"><img src="https://image.tmdb.org/t/p/w300/{{movie.poster_path}}"></a>
-      <!-- Modal -->
-      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">{{ movie.title }}의 예고편</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-                {% for youtube_item in youtube_items %}
-                <iframe type="text/html" class="embed-responsive-item" src="https://www.youtube.com/embed/{{ youtube_item.id.videoId }}" ></iframe>    
-                {% endfor %}
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-          </div>
-        </div>
-      </div>
-        <div>
-            <h3>{{ movie.title }}</h3>
-            <h5>{{ movie.original_title }}</h5>
-            <p>평점: {{ movie.vote_average }}</p>
-            <p>개봉 일: {{ movie.release_date }}</p>
-            <p>누적 관객 수: {{ movie.popularity }}</p>
-            <hr>
-            <p>{{ movie.overview }}</p>
-            <hr>
-        </div>
+<div class="container" style="margin-top: 50px;">
+  <div class="row">
+    <div class="col-4 d-flex flex-row">
+      <img src="https://image.tmdb.org/t/p/w300/{{movie.poster_path}}">
     </div>
-
+    <div class="col d-flex flex-column justify-content-center">
+      <h3 class="text_B">{{ movie.title }}<span class="badge badge-secondary" style="background-color: rgb(98, 47, 243);">{{ movie.vote_average }}</span></h3>
+      <h5 class="text_L">{{ movie.original_title }}</h5>
+      <hr>
+      <p class="text_L">개봉 일: {{ movie.release_date }}</p>
+      <p class="text_L">누적 관객 수: {{ movie.popularity }}</p>
+      <form action="{% url 'articles:community' movie.pk %}">
+        <button class="btn text_R" style="background-color: rgb(98, 47, 243); color: white; margin-top: 100px;">감상 공유하러 가기</button>
+      </form>
+    </div>
+  </div>
+  <hr>
+  <div class="row" style="margin-top: 50px;">
+    <p class="text_B">overview</p>
+    <p class="text_L">{{ movie.overview }}</p>
+  </div>
+  <hr>
+  <div class="row" style="margin-bottom: 100px;">
+    <p class="text_B" style="margin-right: 50px;">Trailor</p>
+    {% for youtube_item in youtube_items %}
+        <iframe width="854" height="480" type="text/html" class="embed-responsive-item" src="https://www.youtube.com/embed/{{ youtube_item.id.videoId }}" frameborder="0"></iframe>    
+    {% endfor %}
+  </div>
 </div>
-
 
 
 {% endblock %}
