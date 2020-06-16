@@ -11,10 +11,10 @@
     <div class="text-center">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-              <a id="popularBtn" class="nav-link active" href="{% url 'articles:movie_list' %}">평점순</a>
+              <a id="popularBtn" class="nav-link active text_L" href="{% url 'articles:movie_list' %}">평점순</a>
             </li>
             <li class="nav-item">
-              <a id="lastBtn" class="nav-link active" href="{% url 'articles:last_movie_list' %}">최신순</a>
+              <a id="lastBtn" class="nav-link active text_L" href="{% url 'articles:last_movie_list' %}">최신순</a>
             </li>
         </ul>
     
@@ -25,9 +25,8 @@
                         <div class="poster-wrap position-relative">
                             <img src="https://image.tmdb.org/t/p/w300/{{movie.poster_path}}" alt="movie_img" style="width: 15rem; height: 20rem;">
                             <div class="description">
-                                <h5>{{ movie.title }}</h5>
-                                <br>
-                                {{ movie.release_date }}
+                                <h5 class="text_R">{{ movie.title }}</h5>
+                                <p class="text_L">{{ movie.release_date }}</p>
                             </div>
                         </div>
                     </button>
@@ -39,11 +38,5 @@
         </div>
     </div>
 </div>
-<script>
-    const lastBtn = document.querySelector('#lastBtn')
-    lastBtn.addEventListener('click', function(event){
-        event.target.classlist.add('active')
-    })
-</script>
 
 {% endblock %}
