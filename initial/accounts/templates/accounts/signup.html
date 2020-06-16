@@ -5,11 +5,16 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <style>
+@font-face {
+    font-family: NanumSquare_acB;
+    src: url(/static/fonts/NanumSquare_acB.ttf);
+}
     * {
     margin: 0;
     padding: 0;
-    font-family: sans-serif;
+    font-family: NanumSquare_acB;
 }
+
 .wrap {
     height: 100%;
     width: 100%;
@@ -67,7 +72,7 @@
 {% load bootstrap4 %}
 {% block content %}
 <div class="wrap">
-    <div class="form-wrap">
+    <div class="form-wrap rounded-lg">
         <form id="login" action="" class="input-group" method="POST">
             {% csrf_token %}
             <div class='loginform'>
