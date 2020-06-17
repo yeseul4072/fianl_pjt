@@ -122,7 +122,7 @@ def movie_detail(request, movie_pk):
     inputvalue = movie.title+'trailer'
     url = 'https://www.googleapis.com/youtube/v3/search'
     params = {
-        'key': 'AIzaSyDKTO02d8YlEKrVzFVme7tq_zqfLDdjQDg',
+        'key': 'AIzaSyC-RPIuE8M6I23rOapplr4MFlpc2_R-3qI',
         'part': 'snippet',
         'type': 'video',
         'maxResults': '1',
@@ -134,8 +134,8 @@ def movie_detail(request, movie_pk):
     context = {
         'movie': movie,
         'reviews': reviews,
-        'response_dict': response_dict
-        # 'youtube_items': response_dict['items']
+        'response_dict': response_dict,
+        'youtube_items': response_dict['items']
     }
     return render(request, 'articles/movie_detail.html', context)
 
@@ -240,7 +240,7 @@ def review_update(request, movie_pk, review_pk):
     context = {
         'form': form,
     }
-    return render(request, 'articles/review_detail.html', context)
+    return render(request, 'articles/form.html', context)
 
 @login_required
 def comment_delete(request, movie_pk, review_pk, comment_pk):
