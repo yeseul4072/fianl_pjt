@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load bootstrap4 %}
 {% load static %}
 {% block head %}
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -256,10 +257,14 @@ text-align: center;
 
         <div style="border-bottom: 2px solid #f4f4f4;">
             {% for comment in comments %}
-            <p>{{ comment.content }}</p>
+            <p class="text_L" style="margin-left:70px;">{{ comment.user }} : {{ comment.content }}</p>
             {% if comment.user == request.user %}
-            <a href="{% url 'articles:comment_delete' movie.pk review.pk comment.pk %}">삭제</a>
-            <a href="{% url 'articles:comment_update' movie.pk review.pk comment.pk %}">수정</a>
+            <a href="{% url 'articles:comment_delete' movie.pk review.pk comment.pk %}">
+              <button class="btn text_L" style="background-color: rgb(98, 47, 243); color: white;">삭제</button>
+            </a>
+            <a href="{% url 'articles:comment_update' movie.pk review.pk comment.pk %}">
+              <button class="btn text_L" style="background-color: rgb(98, 47, 243); color: white;">수정</button>
+            </a>
             {% endif %}
             {% endfor %}
         </div>
@@ -272,20 +277,16 @@ text-align: center;
         <img class="rounded-circle" src="/static/noprofile.jpg" alt="...">     
         {% endif %}                   
         </span>
+
         <div class="search">
-        {% if request.user.is_authenticated %}
-        {% if request.resolver_match.comment_create %}    
         <form action="{% url 'articles:comment_create' movie.pk review.pk %}" method="POST">
-        {% else %}
-        <form action="" method="POST">
-        {% endif %}
         {% csrf_token %}     
-        <label for="content"></label>   
-        <input placeholder="Write a comment" type="text" id="content">
+        {% bootstrap_form form %}
         <button class="btn" style="background-color: rgb(98, 47, 243); color: white;">comment</button>
         </form>
-        {% endif %}
-    </div><!--/. Search -->
+
+      </div><!--/. Search -->
+
         </div><!--/ cardbox-like -->			  
             
     </div><!--/ cardbox -->
