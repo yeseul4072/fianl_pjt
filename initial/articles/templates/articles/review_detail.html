@@ -255,7 +255,7 @@ text-align: center;
         </div><!--/ cardbox-heading -->
         
         <div class="cardbox-item">
-        <img class="img-fluid" src="https://image.tmdb.org/t/p/w300/{{ review.movie.poster_path }}" alt="Image">
+        <img class="img-fluid" src="https://image.tmdb.org/t/p/w400/{{ review.movie.poster_path }}" alt="Image">
         </div><!--/ cardbox-item -->
         <div class="cardbox-base">
         <p class="text_L" style="margin-left: 70px; margin-top: 70px;">{{ review.content }}</p>
@@ -274,11 +274,10 @@ text-align: center;
 
         <div class="cardbox-comments">
         <span class="comment-avatar float-left">
-          {% if request.user.image %}
+        {% if request.user.image %}
         <img class="rounded-circle" src="{{ request.user.image.url }}" alt="...">     
         {% else %}
         <img class="rounded-circle" src="/static/noprofile.jpg" alt="...">     
-
         {% endif %}                   
         </span>
         <div class="search">
@@ -290,6 +289,7 @@ text-align: center;
         {% endif %}
         {% csrf_token %}     
         <label for="content"></label>   
+        <label for="your_name">Your name: </label>
         <input placeholder="Write a comment" type="text" id="content">
         <button class="btn" style="background-color: rgb(98, 47, 243); color: white;">comment</button>
         </form>
