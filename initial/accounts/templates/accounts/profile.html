@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block head %}
+
 <style>
 .profile-header {
     transform: translateY(5rem);
@@ -11,11 +13,12 @@ body {
     min-height: 100vh;
 }
 </style>
+<link rel="stylesheet" href="{% static 'articles/style.css' %}">
 {% endblock %}
 {% block content %}
 {% load static %}
 <div class="row">
-    <div class="col-lg-7 mx-auto text-white text-center pt-5">
+    <div class="col-lg-7 mx-auto text-white text-center pt-5 text_R">
             {% if person.nickname %}
             <h1 class="display-4">{{ person.nickname }} Profile Page</h1>
             {%else %}
@@ -43,7 +46,12 @@ body {
                     {% endif %}
                     <div class="media-body mb-5 text-white">
                         <h4 class="mt-0 mb-0">{{ person.username }}</h4>
-                        <p class="small mb-4"> <i class="fa fa-map-marker mr-2"></i>San Farcisco</p>
+                        {% if person.nickname %}
+                        <p class="small mb-4"> <i class="fa fa-map-marker mr-2"></i>{{ person.nickname }}</p>
+                        {% else %}
+                        <p class="small mb-4"> <i class="fa fa-map-marker mr-2"></i>반갑습니다</p>
+
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -61,24 +69,24 @@ body {
 
             <div class="py-4 px-4">
                 <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h5 class="mb-0">최근 리뷰</h5><a href="#" class="btn btn-link text-muted">Show all</a>
+                    <h5 class="mb-0 text_B">최근 리뷰</h5><a href="#" class="btn btn-link text-muted">Show all</a>
                 </div>
                 <div class="row">
                     {% if reviews %}
                     {% for review in reviews %}
-                    <div class="col-lg-6 mb-2 pr-lg-1"><a href="{% url 'articles:review_detail' review.movie.pk review.pk %}" class="list-group-item list-group-item-action"><img src="https://image.tmdb.org/t/p/w300/{{review.movie.poster_path}}" alt="" class="img-fluid rounded shadow-sm"></a></div>
+                    <div class="col-lg-6 mb-2 pr-lg-1"><a href="{% url 'articles:review_detail' review.movie.pk review.pk %}" class="list-group-item list-group-item-action"><img src="https://image.tmdb.org/t/p/w300/{{review.movie.poster_path}}" alt="" class="img-fluid rounded shadow-sm" style="margin: auto;"></a></div>
                     {% endfor %}
                     {% else %}
                     <p>등록된 리뷰가 없습니다.</p>
                     {% endif %}
             </div>
                 <div class="py-4">
-                    <h5 class="mb-3">프로필 소개</h5>
-                    <div class="p-4 bg-light rounded shadow-sm">
+                    <h5 class="mb-3 text_B">프로필 소개</h5>
+                    <div class="p-4 bg-light rounded shadow-sm text_XL">
                         {% if person.myinfo %}
                         <p class="font-italic mb-0">{{ person.myinfo }}</p>
                         {% else %}
-                        <p class="font-italic mb-0">등록된 소개가 없습니다</p>
+                        <p class="font-italic mb-0 text_XL">등록된 소개가 없습니다</p>
                         {% endif %}
                         <ul class="list-inline small text-muted mt-3 mb-0">
                             <li class="list-inline-item"><i class="fa fa-comment-o mr-2"></i></li>
@@ -89,9 +97,9 @@ body {
                 <div class = "following">
                 {% if request.user != person %}
                     {% if request.user in person.followers.all %}
-                    <a href="{% url 'accounts:follow' person.username %}" class="btn btn-dark btn-sm btn-block" style="width: 30%;">팔로우 취소</a>
+                    <a href="{% url 'accounts:follow' person.username %}" class="btn btn-dark btn-sm btn-block text_R" style="width: 30%;">팔로우 취소</a>
                     {% else %}
-                    <a href="{% url 'accounts:follow' person.username %}" class="btn btn-dark btn-sm btn-block" style="width: 30%;">팔로우</a>
+                    <a href="{% url 'accounts:follow' person.username %}" class="btn btn-dark btn-sm btn-block text_R" style="width: 30%;">팔로우</a>
                     {% endif %}
                 {% endif %}
                 </div>

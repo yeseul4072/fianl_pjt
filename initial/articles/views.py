@@ -197,7 +197,6 @@ def review_detail(request, movie_pk, review_pk):
         'movie': movie,
         'review': review,
         'comments': comments,
-        # comment 
         'form': form,
     }
     return render(request, 'articles/review_detail.html', context)
