@@ -202,6 +202,7 @@ def review_detail(request, movie_pk, review_pk):
     return render(request, 'articles/review_detail.html', context)
 
 
+
 @login_required
 def comment_create(request, movie_pk, review_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
