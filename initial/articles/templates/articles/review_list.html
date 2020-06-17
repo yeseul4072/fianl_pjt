@@ -13,10 +13,13 @@
 <header class="mx-auto" style="width: 200px; margin-top: 50px;">
   <div style="margin-bottom:50px;">
     <b class = "text_B" style="color: rgb(98, 47, 238);">취향</b><span class="text_B"> 나눔소</span>
-</div>
+  </div>
 </header>
 
 <div class="container" >
+    <div style="display: block;">
+      <button class="btn text_R" style="background-color: rgb(98, 47, 243); color: white; margin-bottom: 20px;">방만들기</button>
+  </div>
   {% for movie in page_obj %}
   <div class="card d-inline-flex m-10 justify-content-center" style="width: 20rem;">
         <button class="btn-poster">
@@ -49,7 +52,7 @@
             <button class="btn text_R" style="background-color: rgb(98, 47, 243); color: white; margin-top: 10px;">영화구경</button>
           </a>
           <a href="{% url 'articles:community' movie.pk %}">
-            <button class="btn text_R" style="background-color: rgb(98, 47, 243); color: white; margin-top: 10px; margin-left: 77px;">취향 나누기</button>
+            <button class="btn text_R" style="background-color: rgb(98, 47, 243); color: white; margin-top: 10px; margin-left: 12px;">입장</button>
           </a>
         </span>
       
