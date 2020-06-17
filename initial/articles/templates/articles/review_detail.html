@@ -200,16 +200,8 @@ text-align: center;
 /* ------------------------------- */
 /* Author
 ---------------------------------- */
-.author a{
- font-family: 'Rokkitt', serif;
- font-size: 16px;
- color: #00C4CF;
-}
-.author p{
- font-family: 'Rokkitt', serif;
- font-size: 16px;
- color: #8d8d8d;
-}
+
+
 </style>
 {% endblock %}
 
@@ -237,7 +229,7 @@ text-align: center;
         </div>
         <div class="media m-0">
         <div class="d-flex mr-3">
-        <a href="{% url 'accounts:profile' review.user %}">
+          <a href="{% url 'accounts:profile' review.user %}">
             {% if review.user.image %}
             <img class="img-fluid rounded-circle" src="{{ review.user.image.url }}" alt="User">
             {% else %}
@@ -258,7 +250,7 @@ text-align: center;
         <img class="img-fluid" src="https://image.tmdb.org/t/p/w400/{{ review.movie.poster_path }}" alt="Image">
         </div><!--/ cardbox-item -->
         <div class="cardbox-base">
-        <p class="text_L" style="margin-left: 70px; margin-top: 70px;">{{ review.content }}</p>
+        <p class="text_L" style="margin-left: 70px; margin-top: 70px; margin-right:70px; margin-bottom:70px;">{{ review.content }}</p>
         </div><!--/ cardbox-base -->
         <!-- comment list -->
 
@@ -289,7 +281,6 @@ text-align: center;
         {% endif %}
         {% csrf_token %}     
         <label for="content"></label>   
-        <label for="your_name">Your name: </label>
         <input placeholder="Write a comment" type="text" id="content">
         <button class="btn" style="background-color: rgb(98, 47, 243); color: white;">comment</button>
         </form>
@@ -302,7 +293,14 @@ text-align: center;
 
     <div class="col-lg-3">
         <div class="shadow-lg p-4 mb-2 bg-white author">
-         <p>영화 간단히 소개</p>
+         {% if request.user != review.user %}
+         {% if request.user in review.user.followers.all %}
+         <a href="{% url 'accounts:follow' review.user.username %}" class="btn btn-dark btn-sm btn-block text_R" >팔로우 취소</a>
+         {% else %}
+         <a href="{% url 'accounts:follow' review.user.username %}" class="btn btn-dark btn-sm btn-block text_R">팔로우</a>
+         {% endif %}
+        {% endif %}
+        </div>
         </div>
     </div>
     </div><!--/ row -->
