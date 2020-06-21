@@ -4,7 +4,7 @@
 >
 > SSAFY 1학기 마지막 프로젝트 
 
-
+UCC 영상 https://youtu.be/MtCmQCIbkI8
 
 ## 프로젝트 배경
 
