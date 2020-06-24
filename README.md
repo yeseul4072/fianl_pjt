@@ -11,7 +11,6 @@ UCC 영상 https://youtu.be/MtCmQCIbkI8
 ![배경](https://user-images.githubusercontent.com/60081199/85346341-14307880-b530-11ea-8706-4cea7b9c46bd.jpg)
 
 
-
 - 영화를 본 후 영화에 대한 감상을 나누고 싶어 하는 사람들의 니즈 발견 
 
 - 영화 정보 전달 위주의 기존 영화 사이트
